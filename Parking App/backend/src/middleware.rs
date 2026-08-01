@@ -1,26 +1,6 @@
-use axum::{
-    extract::Request,
-    http::StatusCode,
-    middleware::Next,
-    response::Response,
-};
-use tower_governor::{
-    governor::GovernorConfigBuilder,
-    Governor,
-};
-
-pub fn create_rate_limiter() -> Governor {
-    let governor_conf = Box::new(
-        GovernorConfigBuilder::default()
-            .per_second(10)
-            .burst_size(20)
-            .finish()
-            .unwrap(),
-    );
-    Governor {
-        config: governor_conf,
-    }
-}
+// Simple middleware placeholder
+// Rate limiting can be implemented at the infrastructure level (Render, Nginx, etc.)
+// or using more sophisticated libraries in the future
 
 pub async fn auth_middleware(
     mut req: Request,
