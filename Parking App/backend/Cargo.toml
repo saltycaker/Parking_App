@@ -57,8 +57,7 @@ async-trait = "0.1"
 utoipa = { version = "4.2", features = ["axum_extras", "chrono", "uuid"] }
 utoipa-swagger-ui = { version = "4.0", features = ["axum"] }
 
-# Rate limiting
-tower-governor = "0.4"
+
 
 [dev-dependencies]
 tokio-test = "0.4"
