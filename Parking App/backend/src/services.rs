@@ -6,7 +6,6 @@ use crate::db::Database;
 use crate::cache::Cache;
 use crate::config::Config;
 use chrono::{Utc, Timelike, Weekday};
-use std::collections::HashMap;
 
 pub use apify::ApifyService;
 
@@ -158,7 +157,7 @@ impl ParkingService {
 
     fn is_location_open(&self, location: &ParkingLocation) -> bool {
         // Check opening hours if available
-        if let Some(hours) = &location.opening_hours {
+        if let Some(_hours) = &location.opening_hours {
             // Parse and check if currently open
             // This is a simplified check - full implementation would parse Google's opening hours format
             return true; // Placeholder
