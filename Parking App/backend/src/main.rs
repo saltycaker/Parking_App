@@ -4,29 +4,21 @@ mod cache;
 mod auth;
 mod models;
 mod handlers;
-mod handlers::auth;
 mod services;
-mod middleware;
 mod error;
-
-use middleware::RateLimiter;
 
 use axum::{
     routing::{get, post, patch, delete},
     Router,
     http::Method,
-    extract::Request,
-    response::Response,
 };
 use tower_http::{
     cors::{CorsLayer, Any},
     trace::TraceLayer,
-    compression::CompressionLayer,
 };
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
-use std::sync::Arc;
 
 use config::Config;
 use db::Database;
@@ -85,11 +77,6 @@ async fn main() -> Result<(), AppError> {
                 .allow_headers(Any),
         )
         .layer(TraceLayer::new_for_http())
-        .layer(CompressionLayer::new())
-        .route_layer(axum::middleware::from_fn_with_state(
-            rate_limiter.clone(),
-            rate_limit_middleware,
-        ))
         .with_state(db)
         .with_state(cache)
         .with_state(config.clone());
