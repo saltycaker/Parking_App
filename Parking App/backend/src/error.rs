@@ -51,16 +51,16 @@ impl IntoResponse for AppError {
                 tracing::error!("JWT error: {}", e);
                 (StatusCode::UNAUTHORIZED, "Invalid authentication token")
             }
-            AppError::Validation(msg) => (StatusCode::BAD_REQUEST, msg.as_str()),
-            AppError::Auth(msg) => (StatusCode::UNAUTHORIZED, msg.as_str()),
-            AppError::NotFound(msg) => (StatusCode::NOT_FOUND, msg.as_str()),
+            AppError::Validation(msg) => (StatusCode::BAD_REQUEST, msg.as_str().to_string()),
+            AppError::Auth(msg) => (StatusCode::UNAUTHORIZED, msg.as_str().to_string()),
+            AppError::NotFound(msg) => (StatusCode::NOT_FOUND, msg.as_str().to_string()),
             AppError::Internal(msg) => {
                 tracing::error!("Internal error: {}", msg);
                 (StatusCode::INTERNAL_SERVER_ERROR, "Internal server error")
             }
             AppError::ExternalApi(msg) => {
                 tracing::error!("External API error: {}", msg);
-                (StatusCode::BAD_GATEWAY, msg.as_str())
+                (StatusCode::BAD_GATEWAY, msg.as_str().to_string())
             }
             AppError::RateLimit => (StatusCode::TOO_MANY_REQUESTS, "Rate limit exceeded"),
         };
