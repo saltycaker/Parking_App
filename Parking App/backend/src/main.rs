@@ -9,10 +9,14 @@ mod services;
 mod middleware;
 mod error;
 
+use middleware::RateLimiter;
+
 use axum::{
     routing::{get, post, patch, delete},
     Router,
     http::Method,
+    extract::Request,
+    response::Response,
 };
 use tower_http::{
     cors::{CorsLayer, Any},
@@ -22,6 +26,7 @@ use tower_http::{
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
 use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
+use std::sync::Arc;
 
 use config::Config;
 use db::Database;
@@ -81,6 +86,10 @@ async fn main() -> Result<(), AppError> {
         )
         .layer(TraceLayer::new_for_http())
         .layer(CompressionLayer::new())
+        .route_layer(axum::middleware::from_fn_with_state(
+            rate_limiter.clone(),
+            rate_limit_middleware,
+        ))
         .with_state(db)
         .with_state(cache)
         .with_state(config.clone());
