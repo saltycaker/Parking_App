@@ -68,8 +68,6 @@ async fn main() -> Result<(), AppError> {
         .route("/auth/logout", post(handlers::auth::logout))
         .route("/profile", get(handlers::get_profile))
         .route("/profile", patch(handlers::update_profile))
-        .merge(SwaggerUi::new("/swagger-ui")
-            .url("/api-docs/openapi.json", handlers::ApiDoc::openapi()))
         .layer(
             CorsLayer::new()
                 .allow_origin(Any)
@@ -77,6 +75,8 @@ async fn main() -> Result<(), AppError> {
                 .allow_headers(Any),
         )
         .layer(TraceLayer::new_for_http())
+        .merge(SwaggerUi::new("/swagger-ui")
+            .url("/api-docs/openapi.json", handlers::ApiDoc::openapi()))
         .with_state(db)
         .with_state(cache)
         .with_state(config.clone());
