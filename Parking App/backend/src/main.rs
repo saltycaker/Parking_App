@@ -17,8 +17,6 @@ use tower_http::{
     trace::TraceLayer,
 };
 use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};
-use utoipa::OpenApi;
-use utoipa_swagger_ui::SwaggerUi;
 
 use config::Config;
 use db::Database;
@@ -75,8 +73,6 @@ async fn main() -> Result<(), AppError> {
                 .allow_headers(Any),
         )
         .layer(TraceLayer::new_for_http())
-        .merge(SwaggerUi::new("/swagger-ui")
-            .url("/api-docs/openapi.json", handlers::ApiDoc::openapi()))
         .with_state(db)
         .with_state(cache)
         .with_state(config.clone());
