@@ -3,7 +3,6 @@ use axum::{
     Json,
 };
 use uuid::Uuid;
-use utoipa::ToSchema;
 
 use crate::models::*;
 use crate::db::Database;
@@ -16,39 +15,6 @@ use crate::error::AppResult;
 pub mod auth;
 
 pub use auth::*;
-
-#[derive(utoipa::OpenApi)]
-#[openapi(
-    paths(
-        health,
-        search_parking,
-        get_parking,
-        create_report,
-        get_report,
-        get_favorites,
-        add_favorite,
-        remove_favorite,
-        get_search_history,
-        get_recommendations,
-        get_profile,
-        update_profile,
-    ),
-    components(schemas(
-        SearchRequest,
-        SearchResponse,
-        ParkingResult,
-        ParkingLocation,
-        AvailabilityEstimate,
-        CreateReportRequest,
-        ParkingReport,
-        Favorite,
-        SearchHistoryEntry,
-        Recommendation,
-        UpdateProfileRequest,
-        UserResponse,
-    ))
-)]
-pub struct ApiDoc;
 
 pub async fn health() -> Json<serde_json::Value> {
     Json(serde_json::json!({
