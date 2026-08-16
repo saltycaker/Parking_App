@@ -1,0 +1,82 @@
+name: parking_app
+description: A production-ready parking discovery mobile application
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # State Management
+  flutter_riverpod: ^2.4.9
+  
+  # Navigation
+  go_router: ^13.0.0
+  
+  # HTTP Client
+  dio: ^5.4.0
+  
+  # Local Storage
+  flutter_secure_storage: ^9.0.0
+  shared_preferences: ^2.2.2
+  
+  # Maps & Location
+  flutter_map: ^6.1.0
+  latlong2: ^0.9.0
+  geolocator: ^10.1.0
+  geocoding: ^2.1.1
+  
+  # JSON Serialization
+  json_annotation: ^4.8.1
+  
+  # DateTime
+  intl: ^0.18.1
+  
+  # UUID
+  uuid: ^4.2.1
+  
+  # UI Components
+  cupertino_icons: ^1.0.6
+  shimmer: ^3.0.0
+  flutter_slidable: ^3.0.1
+  
+  # Permissions
+  permission_handler: ^11.1.0
+  
+  # Camera & ML Kit for Car Detection
+  camera: ^0.10.5+5
+  google_mlkit_object_detection: ^0.11.0
+  google_mlkit_commons: ^0.7.0
+  tflite_flutter: ^0.10.4
+  
+  # Utils
+  path_provider: ^2.1.1
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.7
+  json_serializable: ^6.7.1
+  mockito: ^5.4.4
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
+    - assets/icons/
+  
+  fonts:
+    - family: Inter
+      fonts:
+        - asset: assets/fonts/Inter-Regular.ttf
+        - asset: assets/fonts/Inter-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Inter-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Inter-Bold.ttf
+          weight: 700
