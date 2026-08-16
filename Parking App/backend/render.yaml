@@ -1,0 +1,57 @@
+services:
+  - type: web
+    name: parking-api
+    env: rust
+    plan: free
+    buildCommand: cargo build --release
+    startCommand: ./target/release/parking-api
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: parking-db
+          property: connectionString
+      - key: REDIS_URL
+        fromService:
+          type: redis
+          name: parking-redis
+          property: connectionString
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_EXPIRATION_HOURS
+        value: 24
+
+      - key: APIFY_API_KEY
+        sync: false
+      - key: APIFY_GOOGLE_PLACES_CRAWLER_ID
+        value: compass/crawler-google-places
+      - key: SERVER_HOST
+        value: 0.0.0.0
+      - key: SERVER_PORT
+        value: 8080
+      - key: RUST_LOG
+        value: info
+      - key: CACHE_TTL_SECONDS
+        value: 3600
+      - key: SEARCH_CACHE_TTL_SECONDS
+        value: 1800
+      - key: REPORT_EXPIRATION_HOURS
+        value: 2
+      - key: DEFAULT_SEARCH_RADIUS_M
+        value: 500
+      - key: MAX_SEARCH_RADIUS_M
+        value: 5000
+      - key: RATE_LIMIT_PER_SECOND
+        value: 10
+      - key: RATE_LIMIT_BURST
+        value: 20
+
+databases:
+  - name: parking-db
+    databaseName: parking_db
+    user: parking_user
+
+  - type: redis
+    name: parking-redis
+    plan: free
+    maxmemoryPolicy: allkeys-lru

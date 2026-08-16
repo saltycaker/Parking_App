@@ -1,0 +1,79 @@
+[package]
+name = "parking-web"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+axum = { version = "0.7", optional = true }
+tower = { version = "0.4", optional = true }
+tower-http = { version = "0.5", features = ["fs"], optional = true }
+leptos = { version = "0.6", features = ["csr", "nightly"] }
+leptos_axum = { version = "0.6", optional = true }
+leptos_meta = { version = "0.6", features = ["csr", "nightly"] }
+leptos_router = { version = "0.6", features = ["csr", "nightly"] }
+wasm-bindgen = "0.2"
+console_log = "1"
+console_error_panic_hook = "0.1"
+log = "0.4"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+chrono = { version = "0.4", features = ["serde"] }
+uuid = { version = "1.6", features = ["v4", "serde"] }
+gloo-net = { version = "0.5", features = ["http", "json"] }
+gloo-storage = "0.3"
+gloo-utils = "0.2"
+web-sys = { version = "0.3", features = [
+    "Window",
+    "Navigator",
+    "Geolocation",
+    "Position",
+    "Coordinates",
+    "PositionOptions",
+    "HtmlElement",
+] }
+js-sys = "0.3"
+wasm-bindgen-futures = "0.4"
+
+[features]
+default = ["csr"]
+hydrate = ["leptos/hydrate", "leptos_meta/hydrate", "leptos_router/hydrate"]
+csr = ["leptos/csr", "leptos_meta/csr", "leptos_router/csr"]
+ssr = ["leptos/ssr", "leptos_meta/ssr", "leptos_router/ssr", "dep:axum", "dep:leptos_axum", "dep:tower", "dep:tower-http"]
+
+[package.metadata.leptos]
+# The name used by wasm-bindgen/cargo-leptos for the final wasm binary.
+# Defaults to the crate name
+bin-name = "parking-web"
+# The site-root folder. Defaults to "site".
+# This is where the leptos output JS and CSS will be written.
+site-root = "site"
+# The style tag. Defaults to "leptos" which is the name of the leptos cargo-leptos css output.
+style-file = "style/output.css"
+# The site-addr specifies the address to serve the site from. Defaults to "127.0.0.1:3000".
+# This is only used for cargo-leptos serve.
+site-addr = "127.0.0.1:3000"
+# The output dir. Defaults to "pkg" for wasm and "dist" for ssr/hydrate.
+# This is where the compiled wasm and ssr/hydrate JS will be written.
+output-dir = "pkg"
+# The port to use for automatic reload monitoring. Defaults to 3001.
+reload-port = 3001
+# [Optional] Files in the assets dir will be copied to the site-root directory during build.
+# Defaults to "public".
+assets-dir = "public"
+# The IP address to listen on for automatic reload monitoring. Defaults to "127.0.0.1".
+reload-addr = "127.0.0.1"
+# [Optional] Command to run when a watch file changes. Defaults to your OS's default command.
+# On Linux: `notify-send 'Leptos watching'`
+# On macOS: `terminal-notifier -title 'Leptos' -message 'Leptos watching'`
+# On Windows: `powershell -Command "Show-Notification -Title 'Leptos' -Message 'Leptos watching'"`
+watch-command = ""
+# [Optional] The browser-bin to use for automatic reload. Defaults to a platform-specific detection.
+# browser-bin = "firefox"
+# [Optional] The JS bin to use for auto-reload. Defaults to a platform-specific detection.
+# browser-args = "--remote-allow-origins=*"
+# [Optional] The environment varible to set for the reload process to signal it to enable auto-reload.
+# Defaults to "LEPTOS_WATCH_ADDR".
+reload-env = "LEPTOS_WATCH_ADDR"
