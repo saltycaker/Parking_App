@@ -7,7 +7,6 @@ mod handlers;
 mod services;
 mod error;
 
-use std::sync::Arc;
 use axum::{
     routing::{get, post, patch, delete},
     Router,
