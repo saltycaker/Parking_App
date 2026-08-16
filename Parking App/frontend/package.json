@@ -1,0 +1,11 @@
+{
+  "name": "parking-web",
+  "version": "0.1.0",
+  "scripts": {
+    "build": "cargo leptos build --release",
+    "dev": "cargo leptos watch"
+  },
+  "devDependencies": {
+    "@leptos/vite-plugin": "^0.6.0"
+  }
+}
