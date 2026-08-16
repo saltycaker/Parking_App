@@ -47,7 +47,7 @@ pub struct UserResponse {
     pub created_at: DateTime<Utc>,
 }
 
-#[derive(Debug, Serialize, Deserialize, ToSchema, Clone)]
+#[derive(Debug, Serialize, Deserialize, ToSchema, Clone, sqlx::FromRow)]
 pub struct ParkingLocation {
     pub id: Uuid,
     pub name: String,
