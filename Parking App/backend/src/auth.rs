@@ -56,6 +56,7 @@ impl AuthService {
         ).map_err(|e| AppError::Jwt(e))
     }
 
+    #[allow(dead_code)]
     pub fn verify_token(&self, token: &str) -> AppResult<String> {
         let token_data = decode::<Claims>(
             token,
