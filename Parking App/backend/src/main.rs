@@ -21,6 +21,7 @@ use config::Config;
 use db::Database;
 use cache::Cache;
 use error::AppError;
+use std::time::Duration;
 
 /// Shared application state — Axum 0.7 supports only a single state type.
 /// All components are wrapped in Arc for cheap cloning across handlers.
@@ -49,12 +50,22 @@ async fn main() -> Result<(), AppError> {
     let config = Config::from_env()?;
     tracing::info!("Configuration loaded successfully");
 
-    // Initialize database
-    let db = Database::new(&config.database_url).await?;
+    // Initialize database with retry logic
+    let db = tokio::time::timeout(
+        Duration::from_secs(60),
+        Database::new(&config.database_url)
+    )
+    .await
+    .map_err(|_| AppError::Internal("Database connection timeout after 60s".to_string()))??;
     tracing::info!("Database connected successfully");
 
-    // Initialize cache
-    let cache = Cache::new(&config.redis_url).await?;
+    // Initialize cache with timeout
+    let cache = tokio::time::timeout(
+        Duration::from_secs(30),
+        Cache::new(&config.redis_url)
+    )
+    .await
+    .map_err(|_| AppError::Internal("Redis connection timeout after 30s".to_string()))??;
     tracing::info!("Redis connected successfully");
 
     // Build shared application state
