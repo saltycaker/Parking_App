@@ -51,12 +51,7 @@ async fn main() -> Result<(), AppError> {
     tracing::info!("Configuration loaded successfully");
 
     // Initialize database with retry logic
-    let db = tokio::time::timeout(
-        Duration::from_secs(60),
-        Database::new(&config.database_url)
-    )
-    .await
-    .map_err(|_| AppError::Internal("Database connection timeout after 60s".to_string()))??;
+    let db = Database::new_with_retry(&config.database_url, 5).await?;
     tracing::info!("Database connected successfully");
 
     // Initialize cache with timeout
