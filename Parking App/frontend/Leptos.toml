@@ -1,0 +1,13 @@
+[package]
+bin-name = "parking-web"
+site-root = "site"
+style-file = "style/output.css"
+site-addr = "127.0.0.1:3000"
+output-dir = "pkg"
+reload-port = 3001
+assets-dir = "public"
+reload-addr = "127.0.0.1"
+watch-command = ""
+browser-bin = ""
+browser-args = "--remote-allow-origins=*"
+reload-env = "LEPTOS_WATCH_ADDR"

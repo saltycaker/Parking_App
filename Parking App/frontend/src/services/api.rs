@@ -32,23 +32,9 @@ pub async fn get_navigation(
     dest_lat: f64,
     dest_lon: f64,
 ) -> Result<NavigationResponse, String> {
-    let request = NavigationRequest {
-        origin_latitude: origin_lat,
-        origin_longitude: origin_lon,
-        destination_latitude: dest_lat,
-        destination_longitude: dest_lon,
-        transport_mode: TransportMode::Driving,
-    };
-
-    Request::post(&format!("{}/navigation", API_BASE_URL))
-        .json(&request)
-        .map_err(|e| format!("Failed to create request: {}", e))?
-        .send()
-        .await
-        .map_err(|e| format!("Failed to send request: {}", e))?
-        .json()
-        .await
-        .map_err(|e| format!("Failed to parse response: {}", e))
+    // Note: Navigation endpoint not yet implemented in backend
+    // This is a placeholder for future implementation
+    Err("Navigation endpoint not yet implemented".to_string())
 }
 
 pub async fn get_favorites() -> Result<Vec<Favorite>, String> {
