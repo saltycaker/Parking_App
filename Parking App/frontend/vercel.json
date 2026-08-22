@@ -1,23 +1,16 @@
 {
   "version": 2,
-  "builds": [
+  "buildCommand": "cargo leptos build --release",
+  "outputDirectory": "site",
+  "installCommand": "cargo install cargo-leptos && cargo leptos build --release",
+  "framework": null,
+  "rewrites": [
     {
-      "src": "package.json",
-      "use": "@vercel/static-build",
-      "config": {
-        "distDir": "site"
-      }
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/site/$1"
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ],
   "env": {
-    "API_BASE_URL": "https://parking-api.onrender.com",
-    "LEPTOS_SITE_ADDR": "127.0.0.1:3000",
-    "LEPTOS_SITE_ROOT": "site"
+    "API_BASE_URL": "https://parking-api.onrender.com"
   }
 }
