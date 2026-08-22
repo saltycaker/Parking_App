@@ -1,7 +1,7 @@
 mod apify;
 
 use crate::models::*;
-use crate::error::{AppError, AppResult};
+use crate::error::AppResult;
 use crate::db::Database;
 use crate::cache::Cache;
 use crate::config::Config;
