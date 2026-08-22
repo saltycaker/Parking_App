@@ -34,7 +34,7 @@ impl Config {
                 .and_then(|s| s.parse().ok())
                 .unwrap_or(24),
             apify_api_key: env::var("APIFY_API_KEY")
-                .expect("APIFY_API_KEY must be set"),
+                .unwrap_or_else(|_| "".to_string()),
             apify_google_places_crawler_id: env::var("APIFY_GOOGLE_PLACES_CRAWLER_ID")
                 .unwrap_or_else(|_| "compass/crawler-google-places".to_string()),
             server_host: env::var("SERVER_HOST")
