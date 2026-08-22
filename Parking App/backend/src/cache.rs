@@ -23,13 +23,13 @@ impl Cache {
 
     pub async fn set(&self, key: &str, value: &str, ttl_seconds: u64) -> AppResult<()> {
         let mut conn = self.pool.get().await?;
-        conn.set_ex(key, value, ttl_seconds).await?;
+        conn.set_ex::<_, _, ()>(key, value, ttl_seconds).await?;
         Ok(())
     }
 
     pub async fn delete(&self, key: &str) -> AppResult<()> {
         let mut conn = self.pool.get().await?;
-        conn.del(key).await?;
+        conn.del::<_, ()>(key).await?;
         Ok(())
     }
 
