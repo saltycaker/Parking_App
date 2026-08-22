@@ -22,7 +22,7 @@ services:
         value: 24
 
       - key: APIFY_API_KEY
-        generateValue: true
+        value: ""
       - key: APIFY_GOOGLE_PLACES_CRAWLER_ID
         value: compass/crawler-google-places
       - key: SERVER_HOST
